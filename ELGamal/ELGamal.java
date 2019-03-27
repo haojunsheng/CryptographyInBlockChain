@@ -7,14 +7,18 @@ public class ELGamal {
 
 	public ELGamal() {
 		do {
+			//1. 随机地选择一个大素数p，且要求p-1有大素数因子，将p公开。
 			p = BigInteger.probablePrime(100, new Random());
 		} while (p.subtract(BigInteger.ONE).divide(new BigInteger("2")).isProbablePrime(100));
 		do {
+			//2.选择一个模p的原根α，并将α公开。
 			alpha = new BigInteger(100, new Random());
 		} while (! isOrigin(alpha, p));
 		do {
+			//3.随机地选择一个整数d（1＜d＜p-1）作为私钥，并对d保密。
 			d = new BigInteger(100, new Random());
 		} while (d.compareTo(BigInteger.ONE) != 1 || d.compareTo(p.subtract(BigInteger.ONE)) != -1);
+		//4.计算公钥y=α^d(mod p)，并将y公开。
 		y = alpha.modPow(d, p);
 	}
 
@@ -27,6 +31,9 @@ public class ELGamal {
 
 	/**
 	 * 加密
+	 * 随机地选取一个整数k（1＜k＜p-1）
+	 * 计算U=yk(mod p)、C1=αk(mod p)、C2=UM(mod p)
+	 * 取(C1,C2)作为密文
 	 * @param M
 	 * @return
 	 */
@@ -60,6 +67,8 @@ public class ELGamal {
 
 	/**
 	 * 解密
+	 * 计算V=C1^d(mod p);
+	 * 计算M=C2V^-1(mod p)
 	 * @param C
 	 * @return
 	 */
