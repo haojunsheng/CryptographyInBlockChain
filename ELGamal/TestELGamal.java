@@ -15,6 +15,8 @@ public class TestELGamal {
 		BigInteger[] C = elgamal.encrypt(M, k);
 		System.out.println("明文：M=" + M);
 		System.out.println("k=" + k);
-		System.out.print("密文：(C1, C2)=(" + C[0] + ", " + C[1] + ")");
+		System.out.println("密文：(C1, C2)=(" + C[0] + ", " + C[1] + ")");
+		BigInteger decryptM=elgamal.decrypt(C);
+		System.out.println("解密：decryptM=" + decryptM);
 	}
 }
